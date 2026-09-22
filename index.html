@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#fffdf8">
+  <title>피슝! - 빈 공간을 채우는 물류</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+:root{
+  --orange:#ff8a3d;
+  --orange2:#ff7d28;
+  --green:#7ed957;
+  --cream:#fff8ee;
+  --ink:#333333;
+  --muted:#8d8d8d;
+  --line:#eeeae3;
+  --card:#ffffff;
+}
+html,body{margin:0;min-height:100%;background:#f4f2ee;color:var(--ink)}
+body{font-family:"Noto Sans KR",system-ui,-apple-system,sans-serif}
+button,input{font:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.phone{
+  width:min(100%,390px);
+  min-height:100vh;
+  margin:0 auto;
+  background:#fffdf9;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 18px 55px rgba(50,45,36,.14)
+}
+.statusbar{
+  height:26px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 18px;font-weight:800;font-size:11px;
+  background:rgba(255,255,255,.96);position:relative;z-index:20
+}
+.status-icons{font-size:9px;letter-spacing:.5px}
+.screens{padding-bottom:67px}
+.screen{display:none;min-height:calc(100vh - 93px)}
+.screen.active{display:block;animation:appear .18s ease}
+@keyframes appear{from{opacity:.45;transform:translateY(3px)}to{opacity:1;transform:none}}
+
+/* HOME */
+.home-screen{background:var(--cream)}
+.home-sky{
+  height:465px;
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 10% 83%,#9ee471 0 3%,transparent 3.3%),
+    radial-gradient(circle at 18% 87%,#72d452 0 5%,transparent 5.5%),
+    radial-gradient(circle at 84% 83%,#a3e57d 0 4%,transparent 4.5%),
+    linear-gradient(#c9efff 0 68%,#e7f7d6 68% 100%);
+}
+.logo-wrap{position:absolute;top:34px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:6px;z-index:4}
+.logo{font-family:"Jua",sans-serif;color:var(--orange);font-size:60px;line-height:1;white-space:nowrap;text-shadow:0 3px 0 rgba(255,255,255,.85);transform:rotate(-4deg)}
+.speed-lines{width:28px;height:24px;position:relative}
+.speed-lines:before,.speed-lines:after{content:"";position:absolute;height:4px;background:#f5a343;border-radius:10px}
+.speed-lines.left:before{width:22px;right:0;top:4px;transform:rotate(-12deg)}
+.speed-lines.left:after{width:15px;right:2px;bottom:5px;transform:rotate(8deg)}
+.speed-lines.right:before{width:22px;left:0;top:4px;transform:rotate(12deg)}
+.speed-lines.right:after{width:15px;left:2px;bottom:5px;transform:rotate(-8deg)}
+.home-sky h1{position:absolute;z-index:3;top:133px;left:0;right:0;margin:0;text-align:center;font-size:22px;letter-spacing:-1px}
+.home-sky p{position:absolute;z-index:3;top:172px;left:0;right:0;text-align:center;color:#687071;font-size:13px;line-height:1.55;margin:0}
+.cloud{position:absolute;background:#fff;border-radius:50px;opacity:.9}
+.cloud:before,.cloud:after{content:"";position:absolute;background:#fff;border-radius:50%}
+.c1{width:52px;height:14px;top:32px;left:19px}.c1:before{width:24px;height:24px;left:8px;top:-11px}.c1:after{width:18px;height:18px;right:7px;top:-6px}
+.c2{width:44px;height:12px;top:94px;right:25px}.c2:before{width:18px;height:18px;left:6px;top:-7px}
+.city{position:absolute;bottom:58px;width:82px;height:77px;opacity:.65;background:linear-gradient(to top,#8edcf3 0 70%,transparent 70%)}
+.city:before{content:"";position:absolute;left:10px;bottom:0;width:18px;height:56px;background:#8edcf3;box-shadow:25px 15px 0 #a7e7f7,48px -6px 0 #85d5ef}
+.city-a{left:-8px}.city-b{right:-20px;transform:scale(.78)}
+.mascot-hero{position:absolute;z-index:5;width:245px;left:50%;bottom:4px;transform:translateX(-50%)}
+.home-panel{
+  margin-top:-8px;border-radius:28px 28px 0 0;background:#fffdf8;
+  padding:21px 17px 17px;display:grid;gap:12px;position:relative;z-index:8
+}
+.big-action{
+  min-height:74px;border:0;border-radius:21px;color:#fff;
+  display:grid;grid-template-columns:52px 1fr 24px;align-items:center;
+  padding:10px 16px;box-shadow:0 5px 11px rgba(93,74,46,.08)
+}
+.big-action.orange{background:linear-gradient(135deg,#ff9a43,#ff7d28)}
+.big-action.green{background:linear-gradient(135deg,#83dd59,#62c84b)}
+.round-icon{width:39px;height:39px;border:2px solid rgba(255,255,255,.8);border-radius:11px;display:grid;place-items:center;font-weight:900;font-size:20px}
+.action-copy{text-align:left}.action-copy b{display:block;font-size:17px}.action-copy small{display:block;font-size:11px;margin-top:3px;opacity:.92}
+.chev{font-size:27px}.chev.dark{color:#888}
+
+/* COMMON APP */
+.app-screen{background:#fffdf9;padding:0 16px 18px}
+.page-head{
+  height:58px;
+  display:grid;grid-template-columns:42px 1fr 42px;align-items:center;
+  margin:0 -4px 6px
+}
+.page-head h2{text-align:center;font-size:18px;margin:0;letter-spacing:-.6px}
+.back,.bell,.settings{border:0;background:transparent;font-size:31px;padding:0;color:#222}
+.bell,.settings{font-size:17px}
+.driver-strip,.profile-strip{
+  display:flex;align-items:center;gap:10px;background:#fff;border-radius:15px;
+  padding:10px 12px;border:1px solid #f1ede6;box-shadow:0 3px 10px rgba(48,43,36,.035)
+}
+.driver-strip img{width:43px;height:43px}.driver-strip b,.driver-strip small,.profile-strip b,.profile-strip small{display:block}
+.driver-strip b,.profile-strip b{font-size:14px}.driver-strip small,.profile-strip small{font-size:10px;margin-top:2px;color:#777}
+.white-card{background:#fff;border:1px solid #f0ece5;border-radius:18px;box-shadow:0 5px 15px rgba(52,44,33,.04)}
+.vehicle-card{margin-top:13px;padding:15px 14px 14px}
+.route-title{display:flex;align-items:center;gap:7px;font-size:14px}
+.pin{width:12px;height:12px;border-radius:50%;display:inline-block;position:relative}
+.pin:after{content:"";position:absolute;width:4px;height:4px;border-radius:50%;background:#fff;left:4px;top:4px}
+.pin.red{background:#f36f44}.pin.yellow{background:#efc54b}.pin.dark{background:#5f5d54;margin-right:4px}
+.truck-row{height:76px;position:relative;margin-top:6px}
+.truck-row img{position:absolute;width:88px;right:10px;bottom:7px}
+.mini-road{position:absolute;left:5px;right:5px;bottom:18px;border-bottom:2px dashed #e8e4dc}
+.capacity-head{display:flex;justify-content:space-between;align-items:end;margin-top:2px}
+.capacity-head span{font-size:12px;font-weight:700}.capacity-head strong{font-size:27px;color:#5ec74d}
+.capacity-bar{display:grid;grid-template-columns:1fr 1fr 1fr 2.3fr;gap:4px;margin-top:5px}
+.capacity-bar i,.capacity-bar em{height:8px;border-radius:6px;background:#5bc844}
+.capacity-bar em{background:#efefeb}
+.capacity-sub{text-align:right;color:#8c8c8c;font-size:9px;margin-top:4px}
+.arrival{display:flex;align-items:center;gap:9px;margin-top:10px}.arrival .clock{font-size:22px}.arrival small,.arrival b{display:block}.arrival small{font-size:11px}.arrival b{font-size:16px}
+.main-btn{width:100%;border:0;background:var(--orange);color:#fff;border-radius:13px;font-weight:800;padding:12px 14px;margin-top:13px}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin:18px 2px 9px}.section-title b{font-size:14px}.section-title span{font-size:10px;color:#a3a3a3}
+.recent-card{padding:13px;display:flex;justify-content:space-between;align-items:center}
+.recent-card b{font-size:12px}.recent-card small{display:block;font-size:9px;color:#888;margin-top:6px}.recent-right{text-align:right}.done{font-size:9px;background:#effbea;color:#65b45b;padding:4px 6px;border-radius:999px}
+
+/* SEND */
+.send-form{display:grid;gap:11px}
+.send-form>label,.form-label{font-size:11px;font-weight:800}
+.select-like{margin-top:6px;border:1px solid #ebe6dd;border-radius:9px;min-height:42px;display:flex;align-items:center;gap:8px;padding:0 11px;background:#fff}
+.select-like input{border:0;outline:0;flex:1;min-width:0;background:transparent;font-size:12px}
+.green-pin{color:#56b35c;font-size:12px}
+.size-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.size-grid label input{display:none}
+.size-grid label span{display:grid;place-items:center;border:1px solid #ece7de;border-radius:10px;padding:10px 3px;background:#fff}
+.size-grid span b{font-size:12px}.size-grid span small{font-size:9px;color:#888;margin-top:2px}
+.size-grid input:checked+span{border-color:#efb066;background:#fff8ec;color:#e99140;box-shadow:0 0 0 1px #f3c790 inset}
+.recommend-vehicle{display:grid;grid-template-columns:58px 1fr 18px;gap:10px;align-items:center;padding:13px}
+.recommend-vehicle img{width:56px}.recommend-vehicle b{font-size:12px}.recommend-vehicle span{display:block;font-size:10px;margin-top:4px}.recommend-vehicle span strong{color:#5eba4f}.recommend-vehicle small{display:block;font-size:9px;color:#777;margin-top:6px;line-height:1.6}
+
+/* RECOMMEND */
+.filter-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:11px}
+.filter-tabs button{border:0;border-radius:999px;background:#f4f2ee;color:#797979;padding:7px 4px;font-size:10px;font-weight:700}
+.filter-tabs button.active{background:var(--orange);color:#fff}
+.cargo-list{display:grid;gap:9px}
+.cargo-card{padding:13px;border:1px solid #f1ede6;border-radius:14px;background:#fff;box-shadow:0 4px 13px rgba(50,42,30,.035)}
+.cargo-top{display:grid;grid-template-columns:26px 1fr auto;gap:8px;align-items:center}.pkg{font-size:21px}.cargo-top b{font-size:12px}.new{background:#dff7d7;color:#50a94b;font-size:8px;padding:3px 5px;border-radius:99px}
+.heart{font-size:18px;color:#999}
+.cargo-meta{font-size:9px;color:#7f7f7f;line-height:1.7;margin:7px 0 0 34px}.cargo-meta strong{color:#3c3c3c}
+.cargo-card .tiny-truck{float:right;width:43px;margin-top:-31px}
+
+/* MYPAGE */
+.no-back{margin-bottom:5px}
+.profile-strip{margin-bottom:10px}
+.profile-placeholder{width:44px;height:44px;border-radius:50%;background:#ecebe8;color:#c6c5c1;display:grid;place-items:center;font-size:22px}
+.menu-list{background:#fff;border:1px solid #efebe4;border-radius:12px;overflow:hidden}
+.menu-list button{width:100%;height:52px;border:0;border-bottom:1px solid #f1eee8;background:#fff;display:grid;grid-template-columns:30px 1fr 20px;align-items:center;text-align:left;padding:0 12px;color:#666}
+.menu-list button:last-child{border-bottom:0}.menu-list button b{font-size:12px;font-weight:500}.menu-list button em{font-style:normal;color:#aaa;font-size:18px}
+
+/* TRACK */
+.track-screen{padding-left:0;padding-right:0}
+.track-screen .page-head{padding:0 16px}
+.map-wrap{background:#fff;border-top:1px solid #eee7dd;border-bottom:1px solid #eee7dd}
+.map-labels{height:47px;padding:7px 15px;display:flex;gap:9px;align-items:center}.map-labels .moving{font-size:9px;background:#428aae;color:#fff;border-radius:99px;padding:4px 7px}.map-labels b,.map-labels small{display:block}.map-labels b{font-size:11px}.map-labels small{font-size:8px;color:#777;margin-top:2px}
+.fake-map{height:305px;position:relative;overflow:hidden;background:#bfe9fb}
+.land{position:absolute;background:#dcebc6;border-radius:45%;filter:blur(.2px)}
+.l1{width:240px;height:380px;left:-120px;top:-70px;transform:rotate(13deg)}
+.l2{width:170px;height:240px;right:-70px;top:40px;transform:rotate(-10deg)}
+.l3{width:120px;height:90px;left:85px;bottom:-44px}
+.route{position:absolute;border-radius:40%;border:5px solid transparent}
+.route-orange{width:170px;height:250px;border-left-color:#f07831;left:108px;top:16px;transform:rotate(12deg)}
+.route-blue{width:125px;height:115px;border-bottom-color:#287cad;left:76px;top:99px;transform:rotate(-9deg)}
+.map-marker{position:absolute;font-size:30px;color:#ff7740;text-shadow:0 1px 0 white}.map-marker.start{left:92px;top:32px}.map-marker.end{right:57px;bottom:32px}
+.map-truck{position:absolute;width:45px;left:187px;top:138px;transform:rotate(12deg)}
+.driver-card{height:74px;display:grid;grid-template-columns:42px 1fr 57px;gap:9px;align-items:center;padding:9px 14px}.driver-card img{width:40px}.driver-card b,.driver-card small{display:block}.driver-card b{font-size:11px}.driver-card small{font-size:8px;color:#777;margin-top:2px}.driver-card button{border:0;background:#f5f3ef;border-radius:9px;height:42px;font-size:17px}.driver-card button small{font-size:7px;color:#555}
+.timeline{padding:5px 16px 15px}.line{height:4px;background:#e6e6e1;border-radius:99px;margin:0 18px}.line span{display:block;width:60%;height:100%;background:#65c54a;border-radius:99px}.nodes{display:flex;justify-content:space-between;margin-top:-11px}.nodes b{width:23px;height:23px;border-radius:50%;background:#6acb4f;color:white;display:grid;place-items:center;font-size:11px}.nodes b small{position:absolute;margin-top:43px;color:#666;font-size:8px;font-weight:500}.nodes .off{background:#fff;border:2px solid #999;color:#777}
+.eco-link{display:block;margin:16px auto;border:0;background:#eff9e9;color:#58a746;border-radius:999px;padding:10px 15px;font-size:11px;font-weight:800}
+
+/* ECO */
+.eco-screen{position:relative;background:linear-gradient(#e9f9df 0 51%,#fffdf9 51%);overflow:hidden}
+.eco-back{position:absolute;top:12px;left:15px;border:0;background:transparent;font-size:31px;z-index:4}
+.eco-screen:before,.eco-screen:after{content:"";position:absolute;bottom:46%;width:110px;height:170px;background:#aee289;border-radius:55% 45% 0 0}
+.eco-screen:before{left:-35px}.eco-screen:after{right:-40px}
+.eco-cloud{position:absolute;top:38px;left:50%;transform:translateX(-50%);width:187px;height:80px;background:#fff;border-radius:50%;display:grid;place-items:center;text-align:center;font-size:14px;z-index:3}
+.eco-cloud:after{content:"";position:absolute;bottom:-11px;width:28px;height:24px;background:#fff;transform:rotate(45deg)}
+.plant-mascot{position:absolute;z-index:4;width:170px;top:117px;left:50%;transform:translateX(-50%)}
+.eco-panel{position:absolute;left:18px;right:18px;bottom:31px;background:#fff;border-radius:18px;padding:18px 14px;text-align:center;box-shadow:0 7px 22px rgba(70,80,50,.07)}
+.eco-panel h2{font-size:14px;color:#65ad53;margin:0 0 13px}.eco-stats{display:grid;grid-template-columns:1fr 1fr;gap:9px}.eco-stats>div{padding:11px 6px;border-radius:12px;background:#fbfdf8}.eco-stats span{display:block;font-size:29px}.eco-stats small{display:block;font-size:9px;color:#777;margin:4px}.eco-stats strong{display:block;color:#60ba4b;font-size:20px}.eco-panel p{font-size:9px;color:#7c7c7c;line-height:1.6;margin:14px 0 0}
+
+/* NAV */
+.bottom-nav{
+  position:fixed;z-index:50;bottom:0;left:50%;transform:translateX(-50%);
+  width:min(100%,390px);height:67px;background:#fff;border-top:1px solid #eeeae3;
+  display:grid;grid-template-columns:repeat(4,1fr);padding-bottom:max(3px,env(safe-area-inset-bottom))
+}
+.bottom-nav button{border:0;background:transparent;color:#8d8d8d;display:grid;place-items:center;align-content:center;gap:2px}
+.bottom-nav button span{font-size:19px;line-height:1}.bottom-nav button small{font-size:8px}
+.bottom-nav button.active{color:var(--orange);font-weight:900}
+.toast{position:fixed;z-index:100;left:50%;bottom:82px;transform:translate(-50%,15px);background:#333;color:#fff;border-radius:13px;padding:10px 14px;font-size:10px;opacity:0;pointer-events:none;transition:.2s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media(min-width:700px){
+  body{padding:24px 0}
+  .phone{min-height:844px;border-radius:29px}
+  .bottom-nav{bottom:24px;border-radius:0 0 29px 29px}
+}
+</style>
+</head>
+<body>
+  <div class="phone">
+    <div class="statusbar">
+      <span>9:41</span>
+      <span class="status-icons">▮▮▮  ᴡɪꜰɪ  ▰</span>
+    </div>
+
+    <main class="screens">
+      <!-- 홈 -->
+      <section class="screen active home-screen" id="home">
+        <div class="home-sky">
+          <div class="cloud c1"></div><div class="cloud c2"></div>
+          <div class="logo-wrap">
+            <div class="speed-lines left"></div>
+            <div class="logo">피슝!</div>
+            <div class="speed-lines right"></div>
+          </div>
+          <h1>가는 길에 화물 하나 더!</h1>
+          <p>빈 공간을 채워, 더 효율적인<br>물류의 시작</p>
+
+          <div class="city city-a"></div>
+          <div class="city city-b"></div>
+          <img class="mascot-hero" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMjAgMjMwIj4KPGRlZnM+PGZpbHRlciBpZD0icyI+PGZlRHJvcFNoYWRvdyBkeD0iMCIgZHk9IjQiIHN0ZERldmlhdGlvbj0iMyIgZmxvb2Qtb3BhY2l0eT0iLjE4Ii8+PC9maWx0ZXI+PC9kZWZzPgo8cGF0aCBkPSJNMjAgMTg2IEM3MCAxNTEgMTIzIDE1OCAxNjYgMTgwIFMyNTIgMjA3IDMxMCAxNzUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzlhYWViOCIgc3Ryb2tlLXdpZHRoPSI0MCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxwYXRoIGQ9Ik0yMCAxODYgQzcwIDE1MSAxMjMgMTU4IDE2NiAxODAgUzI1MiAyMDcgMzEwIDE3NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1kYXNoYXJyYXk9IjEzIDEyIi8+CjxnIGZpbHRlcj0idXJsKCNzKSI+CjxyZWN0IHg9IjkxIiB5PSIxMjgiIHdpZHRoPSIxMzYiIGhlaWdodD0iNTgiIHJ4PSIxOSIgZmlsbD0iI2Y3OTMzYyIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjUiLz4KPHBhdGggZD0iTTc0IDE0NCBxOC0yOSAyOS0yOSBoMzQgdjcxIEg3NXoiIGZpbGw9IiNmZjljNDMiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI1Ii8+CjxyZWN0IHg9Ijg3IiB5PSIxMjQiIHdpZHRoPSIzMiIgaGVpZ2h0PSIyMyIgcng9IjgiIGZpbGw9IiNkOGYxZjgiLz4KPGNpcmNsZSBjeD0iMTAxIiBjeT0iMTg2IiByPSIxOSIgZmlsbD0iIzNmNDU0OCIvPjxjaXJjbGUgY3g9IjEwMSIgY3k9IjE4NiIgcj0iOSIgZmlsbD0iI2Y4YzQ2YiIvPgo8Y2lyY2xlIGN4PSIyMDEiIGN5PSIxODYiIHI9IjE5IiBmaWxsPSIjM2Y0NTQ4Ii8+PGNpcmNsZSBjeD0iMjAxIiBjeT0iMTg2IiByPSI5IiBmaWxsPSIjZjhjNDZiIi8+CjxyZWN0IHg9IjE4MCIgeT0iOTMiIHdpZHRoPSI1NCIgaGVpZ2h0PSI0NiIgcng9IjciIGZpbGw9IiNkNDkzNTAiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI0Ii8+CjxwYXRoIGQ9Ik0yMDcgOTN2NDZNMTgwIDExMWg1NCIgc3Ryb2tlPSIjYjU3ODNkIiBzdHJva2Utd2lkdGg9IjMiLz4KPC9nPgo8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMDUsNDUpIj4KPGVsbGlwc2UgY3g9IjQ1IiBjeT0iNTciIHJ4PSI0NCIgcnk9IjQ1IiBmaWxsPSIjZmZmN2U4IiBzdHJva2U9IiNlOGEzNWIiIHN0cm9rZS13aWR0aD0iNCIvPgo8cGF0aCBkPSJNMTIgNDIgQzIgMTggMTUgNSAyOCAyMSIgZmlsbD0iI2VlYTM0ZSIvPjxwYXRoIGQ9Ik03OCA0MiBDOTAgMTggNzYgNSA2MiAyMSIgZmlsbD0iI2VlYTM0ZSIvPgo8Y2lyY2xlIGN4PSIzMSIgY3k9IjU2IiByPSI1IiBmaWxsPSIjMzMzIi8+PGNpcmNsZSBjeD0iNTkiIGN5PSI1NiIgcj0iNSIgZmlsbD0iIzMzMyIvPgo8cGF0aCBkPSJNNDEgNjYgcTUgNSAxMCAwIiBmaWxsPSJub25lIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxjaXJjbGUgY3g9IjIzIiBjeT0iNjciIHI9IjYiIGZpbGw9IiNmNmIwYTIiIG9wYWNpdHk9Ii41NSIvPjxjaXJjbGUgY3g9IjY3IiBjeT0iNjciIHI9IjYiIGZpbGw9IiNmNmIwYTIiIG9wYWNpdHk9Ii41NSIvPgo8cGF0aCBkPSJNOCAxOCBxMzYtMzAgNzMgMCBsLTQgMTcgcS0zMi0xOC02NSAxeiIgZmlsbD0iI2VmOGIzMiIgc3Ryb2tlPSIjZDk3ODI5IiBzdHJva2Utd2lkdGg9IjMiLz4KPHRleHQgeD0iNDUiIHk9IjI1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0id2hpdGUiPu2UvOyKnTwvdGV4dD4KPC9nPgo8cGF0aCBkPSJNMjUyIDEwMiBxMjAtMTYgMzAtMyBxLTE2IDMtMTkgMTkgcS01LTktMTEtMTZ6IiBmaWxsPSIjNmZjODRmIiBzdHJva2U9IiM0ZjlmM2QiIHN0cm9rZS13aWR0aD0iMiIvPgo8L3N2Zz4=" alt="피슝 마스코트가 탄 화물차">
+        </div>
+
+        <div class="home-panel">
+          <button class="big-action orange" data-go="send">
+            <span class="round-icon box-icon">◇</span>
+            <span class="action-copy"><b>화물 보내기</b><small>내 화물을 원하는 곳으로!</small></span>
+            <span class="chev">›</span>
+          </button>
+          <button class="big-action green" data-go="vehicle">
+            <span class="round-icon truck-icon">▰</span>
+            <span class="action-copy"><b>빈 차량 찾기</b><small>가는 길에 수익 더하기!</small></span>
+            <span class="chev">›</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- 내 차량 -->
+      <section class="screen app-screen" id="vehicle">
+        <header class="page-head">
+          <button class="back" data-go="home">‹</button>
+          <h2>내 차량</h2>
+          <button class="bell">🔔</button>
+        </header>
+
+        <div class="driver-strip">
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDciIGZpbGw9IiNmZmYxZDgiLz4KPGNpcmNsZSBjeD0iNTAiIGN5PSI1MyIgcj0iMzEiIGZpbGw9IiNmNGM3OWIiLz4KPHBhdGggZD0iTTI0IDQ4IHE0LTMxIDI2LTMxIDI0IDAgMjkgMzEtMTQtMTUtMjktMTQtMTQgMC0yNiAxNHoiIGZpbGw9IiMzMzMiLz4KPHBhdGggZD0iTTIwIDI1IHEzMC0yNCA2MCAwIGwtNSAxNXEtMjUtMTMtNTAgMHoiIGZpbGw9IiNmMThiMzUiLz4KPGNpcmNsZSBjeD0iNDAiIGN5PSI1NCIgcj0iMyIgZmlsbD0iIzIyMiIvPjxjaXJjbGUgY3g9IjYwIiBjeT0iNTQiIHI9IjMiIGZpbGw9IiMyMjIiLz4KPHBhdGggZD0iTTQzIDY2IHE3IDUgMTQgMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjOGI1NzNkIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4=" alt="">
+          <div><b>김배송 기사님</b><small>안전운전하세요!</small></div>
+        </div>
+
+        <article class="white-card vehicle-card">
+          <div class="route-title">
+            <span class="pin red"></span><b>서울</b><span>→</span><span class="pin yellow"></span><b>부산</b>
+          </div>
+
+          <div class="truck-row">
+            <div class="mini-road"></div>
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNzAgOTAiPgo8cmVjdCB4PSI2MiIgeT0iMjIiIHdpZHRoPSI3OCIgaGVpZ2h0PSI0OCIgcng9IjUiIGZpbGw9IiNlY2U5ZTIiLz4KPHBhdGggZD0iTTIzIDQyIHE2LTIwIDIzLTIwIGgyM3Y0OEgxOHoiIGZpbGw9IiM5ZGJhYzMiLz4KPHJlY3QgeD0iMzEiIHk9IjI5IiB3aWR0aD0iMjEiIGhlaWdodD0iMTYiIHJ4PSIzIiBmaWxsPSIjZGZmNGZiIi8+CjxyZWN0IHg9IjIwIiB5PSI2MiIgd2lkdGg9IjEyNiIgaGVpZ2h0PSIxMCIgcng9IjQiIGZpbGw9IiM3ZThiOGUiLz4KPGNpcmNsZSBjeD0iNDgiIGN5PSI3MyIgcj0iMTIiIGZpbGw9IiM0MTQ4NDkiLz48Y2lyY2xlIGN4PSI0OCIgY3k9IjczIiByPSI1IiBmaWxsPSIjYzljOWMzIi8+CjxjaXJjbGUgY3g9IjEyMiIgY3k9IjczIiByPSIxMiIgZmlsbD0iIzQxNDg0OSIvPjxjaXJjbGUgY3g9IjEyMiIgY3k9IjczIiByPSI1IiBmaWxsPSIjYzljOWMzIi8+Cjwvc3ZnPg==" alt="화물차">
+          </div>
+
+          <div class="capacity-head"><span>적재 가능 공간</span><strong>40%</strong></div>
+          <div class="capacity-bar"><i></i><i></i><i></i><em></em></div>
+          <div class="capacity-sub">약 6.4톤 / 16톤</div>
+
+          <div class="arrival"><span class="clock">◷</span><div><small>부산 도착 예정</small><b>16:30</b></div></div>
+
+          <button class="main-btn" data-go="recommend">화물 찾기</button>
+        </article>
+
+        <div class="section-title"><b>최근 운행 정보</b><span>더보기 ›</span></div>
+        <article class="white-card recent-card">
+          <div>
+            <b><span class="pin dark"></span>서울 → 부산</b>
+            <small>2025. 09. 20</small>
+          </div>
+          <div class="recent-right">
+            <span class="done">배송 완료</span>
+            <small>적재율 100%</small>
+          </div>
+        </article>
+      </section>
+
+      <!-- 화물 보내기 -->
+      <section class="screen app-screen" id="send">
+        <header class="page-head">
+          <button class="back" data-go="home">‹</button>
+          <h2>화물 보내기</h2>
+          <span></span>
+        </header>
+
+        <form id="cargoForm" class="send-form">
+          <label>출발지
+            <div class="select-like"><span class="map-pin green-pin">●</span><input id="from" value="부산" required><span>⌄</span></div>
+          </label>
+          <label>도착지
+            <div class="select-like"><span class="map-pin green-pin">●</span><input id="to" value="서울" required><span>⌄</span></div>
+          </label>
+
+          <div class="form-label">화물 크기</div>
+          <div class="size-grid">
+            <label><input type="radio" name="size" value="소형" checked><span><b>소형</b><small>(1톤 이하)</small></span></label>
+            <label><input type="radio" name="size" value="중형"><span><b>중형</b><small>(1~5톤)</small></span></label>
+            <label><input type="radio" name="size" value="대형"><span><b>대형</b><small>(5톤 이상)</small></span></label>
+          </div>
+
+          <label>희망 날짜
+            <div class="select-like"><span>▣</span><input id="date" type="date" required></div>
+          </label>
+
+          <button class="main-btn" type="submit">화물 등록하기</button>
+        </form>
+
+        <div class="section-title"><b>피슝 추천 차량</b><span>더보기 ›</span></div>
+        <article class="white-card recommend-vehicle" data-go="track">
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTAgOTAiPgo8cmVjdCB4PSI2MiIgeT0iMjAiIHdpZHRoPSI2MSIgaGVpZ2h0PSI0OCIgcng9IjUiIGZpbGw9IiNmNDlhNDUiLz4KPHBhdGggZD0iTTI0IDM5IHE2LTE5IDIyLTE5IGgyNHY0OEgxOHoiIGZpbGw9IiNmMDgzMmYiLz4KPHJlY3QgeD0iMzIiIHk9IjI3IiB3aWR0aD0iMjEiIGhlaWdodD0iMTYiIHJ4PSIzIiBmaWxsPSIjZGZmNGZiIi8+CjxyZWN0IHg9IjE5IiB5PSI2MSIgd2lkdGg9IjExMSIgaGVpZ2h0PSI5IiByeD0iNCIgZmlsbD0iIzYwNGY0NCIvPgo8Y2lyY2xlIGN4PSI0NiIgY3k9IjcyIiByPSIxMiIgZmlsbD0iIzNkNDU0NyIvPjxjaXJjbGUgY3g9IjQ2IiBjeT0iNzIiIHI9IjUiIGZpbGw9IiNmMGJlNjkiLz4KPGNpcmNsZSBjeD0iMTA4IiBjeT0iNzIiIHI9IjEyIiBmaWxsPSIjM2Q0NTQ3Ii8+PGNpcmNsZSBjeD0iMTA4IiBjeT0iNzIiIHI9IjUiIGZpbGw9IiNmMGJlNjkiLz4KPC9zdmc+" alt="트럭">
+          <div>
+            <b>부산 → 서울</b>
+            <span>남은 공간 <strong>40%</strong></span>
+            <small>예상 운송비 <b>120,000원</b><br>도착 예정&nbsp;&nbsp; 9.25(목) 18:00</small>
+          </div>
+          <span class="chev dark">›</span>
+        </article>
+      </section>
+
+      <!-- 추천 화물 -->
+      <section class="screen app-screen" id="recommend">
+        <header class="page-head">
+          <button class="back" data-go="vehicle">‹</button>
+          <h2>추천 화물</h2>
+          <span></span>
+        </header>
+
+        <div class="filter-tabs">
+          <button class="active" data-filter="전체">전체</button>
+          <button data-filter="소형">소형</button>
+          <button data-filter="중형">중형</button>
+          <button data-filter="대형">대형</button>
+        </div>
+
+        <div id="cargoList" class="cargo-list"></div>
+      </section>
+
+      <!-- 마이페이지 -->
+      <section class="screen app-screen" id="mypage">
+        <header class="page-head no-back">
+          <span></span><h2>마이페이지</h2><button class="settings">⚙</button>
+        </header>
+
+        <div class="profile-strip">
+          <div class="profile-placeholder">●</div>
+          <div><b>피슝님</b><small>좋은 하루 되세요!</small></div>
+        </div>
+
+        <div class="menu-list">
+          <button><span>♙</span><b>내 정보 수정</b><em>›</em></button>
+          <button><span>◷</span><b>운송 기록</b><em>›</em></button>
+          <button><span>◉</span><b>문의하기</b><em>›</em></button>
+          <button><span>⌂</span><b>공지사항</b><em>›</em></button>
+          <button><span>⚙</span><b>앱 설정</b><em>›</em></button>
+        </div>
+      </section>
+
+      <!-- 위치 확인 -->
+      <section class="screen app-screen track-screen" id="track">
+        <header class="page-head">
+          <button class="back" data-go="send">‹</button>
+          <h2>화물 위치 확인</h2><span></span>
+        </header>
+
+        <div class="map-wrap">
+          <div class="map-labels">
+            <span class="moving">운송 중</span>
+            <div><b>부산 → 서울</b><small>도착 예정 18:00</small></div>
+          </div>
+
+          <div class="fake-map">
+            <div class="land l1"></div><div class="land l2"></div><div class="land l3"></div>
+            <div class="route route-orange"></div>
+            <div class="route route-blue"></div>
+            <span class="map-marker start">●</span>
+            <span class="map-marker end">●</span>
+            <img class="map-truck" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNTAgOTAiPgo8cmVjdCB4PSI2MiIgeT0iMjAiIHdpZHRoPSI2MSIgaGVpZ2h0PSI0OCIgcng9IjUiIGZpbGw9IiNmNDlhNDUiLz4KPHBhdGggZD0iTTI0IDM5IHE2LTE5IDIyLTE5IGgyNHY0OEgxOHoiIGZpbGw9IiNmMDgzMmYiLz4KPHJlY3QgeD0iMzIiIHk9IjI3IiB3aWR0aD0iMjEiIGhlaWdodD0iMTYiIHJ4PSIzIiBmaWxsPSIjZGZmNGZiIi8+CjxyZWN0IHg9IjE5IiB5PSI2MSIgd2lkdGg9IjExMSIgaGVpZ2h0PSI5IiByeD0iNCIgZmlsbD0iIzYwNGY0NCIvPgo8Y2lyY2xlIGN4PSI0NiIgY3k9IjcyIiByPSIxMiIgZmlsbD0iIzNkNDU0NyIvPjxjaXJjbGUgY3g9IjQ2IiBjeT0iNzIiIHI9IjUiIGZpbGw9IiNmMGJlNjkiLz4KPGNpcmNsZSBjeD0iMTA4IiBjeT0iNzIiIHI9IjEyIiBmaWxsPSIjM2Q0NTQ3Ii8+PGNpcmNsZSBjeD0iMTA4IiBjeT0iNzIiIHI9IjUiIGZpbGw9IiNmMGJlNjkiLz4KPC9zdmc+" alt="">
+          </div>
+
+          <div class="driver-card">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDciIGZpbGw9IiNmZmYxZDgiLz4KPGNpcmNsZSBjeD0iNTAiIGN5PSI1MyIgcj0iMzEiIGZpbGw9IiNmNGM3OWIiLz4KPHBhdGggZD0iTTI0IDQ4IHE0LTMxIDI2LTMxIDI0IDAgMjkgMzEtMTQtMTUtMjktMTQtMTQgMC0yNiAxNHoiIGZpbGw9IiMzMzMiLz4KPHBhdGggZD0iTTIwIDI1IHEzMC0yNCA2MCAwIGwtNSAxNXEtMjUtMTMtNTAgMHoiIGZpbGw9IiNmMThiMzUiLz4KPGNpcmNsZSBjeD0iNDAiIGN5PSI1NCIgcj0iMyIgZmlsbD0iIzIyMiIvPjxjaXJjbGUgY3g9IjYwIiBjeT0iNTQiIHI9IjMiIGZpbGw9IiMyMjIiLz4KPHBhdGggZD0iTTQzIDY2IHE3IDUgMTQgMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjOGI1NzNkIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4=" alt="">
+            <div><b>김배송 기사님</b><small>차량번호 12가 3456</small></div>
+            <button>☎<small>연락하기</small></button>
+          </div>
+
+          <div class="timeline">
+            <div class="line"><span></span></div>
+            <div class="nodes"><b>✓<small>출발</small></b><b>✓<small>운송 중</small></b><b class="off">○<small>도착 예정</small></b></div>
+          </div>
+        </div>
+
+        <button class="eco-link" data-go="eco">탄소 절감 효과 보기 🌱</button>
+      </section>
+
+      <!-- 친환경 결과 -->
+      <section class="screen eco-screen" id="eco">
+        <button class="eco-back" data-go="track">‹</button>
+        <div class="eco-cloud">
+          <b>오늘도<br>빈 차 운행을 줄였어요!</b>
+        </div>
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMTcwIj4KPGVsbGlwc2UgY3g9IjkwIiBjeT0iMTAwIiByeD0iNTMiIHJ5PSI1MSIgZmlsbD0iI2ZmZjhlYSIgc3Ryb2tlPSIjZTlhNTVmIiBzdHJva2Utd2lkdGg9IjQiLz4KPHBhdGggZD0iTTU1IDc3IEM0MiA1MiA1NSAzOCA2OSA1NSIgZmlsbD0iI2VjYTA0ZCIvPjxwYXRoIGQ9Ik0xMjggNzcgQzE0MiA1MiAxMjggMzggMTEzIDU1IiBmaWxsPSIjZWNhMDRkIi8+CjxwYXRoIGQ9Ik00OCA0NSBxNDItMjkgODQgMCBsLTUgMTcgcS0zNy0xNy03NCAweiIgZmlsbD0iI2VmOGEzMiIgc3Ryb2tlPSIjZGE3OTI4IiBzdHJva2Utd2lkdGg9IjMiLz4KPHRleHQgeD0iOTAiIHk9IjUzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0id2hpdGUiPu2UvOyKnTwvdGV4dD4KPGNpcmNsZSBjeD0iNzQiIGN5PSI5OCIgcj0iNSIgZmlsbD0iIzMzMyIvPjxjaXJjbGUgY3g9IjEwNiIgY3k9Ijk4IiByPSI1IiBmaWxsPSIjMzMzIi8+CjxwYXRoIGQ9Ik04MyAxMTAgcTcgNiAxNSAwIiBmaWxsPSJub25lIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxjaXJjbGUgY3g9IjY0IiBjeT0iMTExIiByPSI3IiBmaWxsPSIjZjNhYWExIiBvcGFjaXR5PSIuNTUiLz48Y2lyY2xlIGN4PSIxMTciIGN5PSIxMTEiIHI9IjciIGZpbGw9IiNmM2FhYTEiIG9wYWNpdHk9Ii41NSIvPgo8cGF0aCBkPSJNMTIwIDEzNyBxMTUtNDIgMjItNTkiIHN0cm9rZT0iIzRjOWU0MiIgc3Ryb2tlLXdpZHRoPSI1IiBmaWxsPSJub25lIi8+CjxwYXRoIGQ9Ik0xMzcgOTAgcTI1LTIxIDM4LTQtMjIgNC0zMSAyMXoiIGZpbGw9IiM3MmNhNTgiIHN0cm9rZT0iIzRiOWM0MSIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxwYXRoIGQ9Ik0xMjYgMTE0IHEtMjQtMjAtMzctNCAxOSAzIDI5IDIweiIgZmlsbD0iIzdkZDY1ZSIgc3Ryb2tlPSIjNGI5YzQxIiBzdHJva2Utd2lkdGg9IjIiLz4KPHJlY3QgeD0iMTExIiB5PSIxMzIiIHdpZHRoPSI0MCIgaGVpZ2h0PSIyNyIgcng9IjciIGZpbGw9IiNjYjhmNTEiLz4KPC9zdmc+" class="plant-mascot" alt="나무를 든 피슝 마스코트">
+        <div class="eco-panel">
+          <h2>함께 만드는 더 나은 내일</h2>
+          <div class="eco-stats">
+            <div><span class="leaf-emoji">🌿</span><small>탄소 배출 절감</small><strong>12.8kg</strong></div>
+            <div><span class="tree-emoji">🌳</span><small>나무 심은 효과</small><strong>약 1.2그루</strong></div>
+          </div>
+          <p>피슝은 오늘도<br>지속 가능한 물류를 위해 달립니다. 🌱</p>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav">
+      <button class="active" data-go="home"><span>⌂</span><small>홈</small></button>
+      <button data-go="vehicle"><span>▱</span><small>내 차량</small></button>
+      <button data-go="recommend"><span>⌕</span><small>화물 찾기</small></button>
+      <button data-go="mypage"><span>♙</span><small>마이페이지</small></button>
+    </nav>
+
+    <div class="toast" id="toast"></div>
+  </div>
+  <script>
+const screens=[...document.querySelectorAll(".screen")];
+const nav=[...document.querySelectorAll(".bottom-nav button")];
+const toast=document.getElementById("toast");
+
+function go(id){
+  screens.forEach(s=>s.classList.toggle("active",s.id===id));
+  nav.forEach(b=>b.classList.toggle("active",b.dataset.go===id));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+document.addEventListener("click",e=>{
+  const g=e.target.closest("[data-go]");
+  if(g) go(g.dataset.go);
+});
+
+function msg(t){
+  toast.textContent=t;
+  toast.classList.add("show");
+  clearTimeout(window._t);
+  window._t=setTimeout(()=>toast.classList.remove("show"),1800);
+}
+
+const d=new Date();
+d.setDate(d.getDate()+3);
+document.getElementById("date").value=d.toISOString().slice(0,10);
+
+document.getElementById("cargoForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const from=document.getElementById("from").value.trim();
+  const to=document.getElementById("to").value.trim();
+  const size=document.querySelector('input[name="size"]:checked').value;
+  localStorage.setItem("pisongCargo",JSON.stringify({from,to,size,date:document.getElementById("date").value}));
+  msg("화물이 등록됐어요!");
+  setTimeout(()=>go("recommend"),500);
+});
+
+const cargo=[
+  {from:"서울",to:"대전",size:"소형",tons:"1톤",price:"80,000원",date:"9.24(수)",new:true},
+  {from:"부산",to:"서울",size:"중형",tons:"3톤",price:"180,000원",date:"9.25(목)"},
+  {from:"광주",to:"인천",size:"소형",tons:"1톤",price:"95,000원",date:"9.26(금)"},
+  {from:"대구",to:"부산",size:"중형",tons:"2.5톤",price:"150,000원",date:"9.25(목)"}
+];
+
+function draw(filter="전체"){
+  const list=document.getElementById("cargoList");
+  list.innerHTML="";
+  cargo.filter(c=>filter==="전체"||c.size===filter).forEach(c=>{
+    const card=document.createElement("article");
+    card.className="cargo-card";
+    card.innerHTML=`
+      <div class="cargo-top">
+        <span class="pkg">📦</span>
+        <div><b>${c.from} → ${c.to}</b><div class="cargo-meta" style="margin-left:0">
+          ${c.size} · ${c.tons}<br>
+          예상 운송비 <strong>${c.price}</strong><br>
+          출발일&nbsp; ${c.date}
+        </div></div>
+        <div>${c.new?'<span class="new">NEW</span>':""}<span class="heart">♡</span></div>
+      </div>
+      <img class="tiny-truck" src="assets/box-truck.svg" alt="">
+    `;
+    card.addEventListener("click",()=>{msg("이 화물을 선택했어요.");setTimeout(()=>go("track"),350)});
+    list.appendChild(card);
+  });
+}
+draw();
+
+document.querySelectorAll(".filter-tabs button").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".filter-tabs button").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    draw(btn.dataset.filter);
+  });
+});
+
+document.querySelectorAll(".menu-list button,.bell,.settings").forEach(b=>{
+  b.addEventListener("click",()=>msg("창업캠프 시연용 기능입니다."));
+});
+  </script>
+</body>
+</html>
